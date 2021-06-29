@@ -365,5 +365,5 @@ int main()
         placeShipRand(boardP1, shipsizes[i]);
     printBoard(boardP1);
     //playerVsPlayer(boardP1,boardP2, boardP1Attac, boardP2Attac);  //player vs player game
-    playerVsAIEasy(boardP1,boardP2, boardP1Attac, boardP2Attac);    //player vs easy
+    playerVsAIEasy(boardP1,boardP2, boardP1Attac, boardP2Attac);    //player vs easy (if you don't win here you are a looser)
 }
