@@ -18,17 +18,17 @@ void selectDiff();  //this function is being used to determine the level of diff
 
 
 //Beginning of the gameplay phase//
-void initalizeBoard(char board[12][12]);    //this function is used to initialized the battleground aka board
-void printBoard(char board[12][12]);    //after initializing the battleground this function is used to show the Game board to the user
-void placeShipRand(char board[12][12], int shipsize);    // place ships randomly
-void playerPlaceShip(char board[12][12], int shipsize);    // place ships manually
-int checkGameOver(char p1[12][12]);     //inorder to be the game over,all the 10ships or 30 box has to be destroyed, thus 'checkGameOver function' is used to check if all the ships has been destroyed or not
-int shootAIEasey(char attak[12][12], char rival[12][12], int turn);     //in Single player mode,player has to choose the difficulty level either hard or easy, thus this function is used to give computer the ability to shoot randomly
-int shoot(char attak[12][12], char rival[12][12], int turn);    //this funtion is the based function for hitting the ships
-void playerVsAIEasy(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12]);  //to play single playermode easy
-void playerVsPlayer(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12]);  //To play the game with a friend(multiplayermode)
-void multiplyerMode();  //here all other functions has been used except "shootAIEasy,playerVsAIEasy&singlePlayerModeEasy" and then it was called in the main function to play multiplayermode.
-void singlePlayerModeEasy(); //just like the multiplayerMode, otherfunction has been called here to play multiplayermode
+void initalizeBoard(char board[12][12]);            //this function is used to initialized the battleground aka board
+void printBoard(char board[12][12]);                //after initializing the battleground this function is used to show the Game board to the user
+void placeShipRand(char board[12][12], int shipsize);                    // place ships randomly
+void playerPlaceShip(char board[12][12], int shipsize);                  // place ships manually
+int checkGameOver(char p1[12][12]);                                       //inorder to be the game over,all the 10ships or 30 box has to be destroyed, thus 'checkGameOver function' is used to check if all the ships has been destroyed or not
+int shootAIEasey(char attak[12][12], char rival[12][12], int turn);       //in Single player mode,player has to choose the difficulty level either hard or easy, thus this function is used to give computer the ability to shoot randomly
+int shoot(char attak[12][12], char rival[12][12], int turn);             //this funtion is the based function for hitting the ships
+void playerVsAIEasy(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12]);        //to play single playermode easy
+void playerVsPlayer(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12]);        //To play the game with a friend(multiplayermode)
+void multiplyerMode();                  //here all other functions has been used except "shootAIEasy,playerVsAIEasy&singlePlayerModeEasy" and then it was called in the main function to play multiplayermode.
+void singlePlayerModeEasy();            //just like the multiplayerMode, otherfunction has been called here to play multiplayermode
 //End of the gameplay Phase
 
 
@@ -259,7 +259,8 @@ void playerTwo()    //This function is used to store 2nd player name in multipla
          puts("|               'To Defeat or to be defeated is your choice                  |");
          puts("|                                                                            |");
          puts("|____________________________________________________________________________|");
-         multiplyerMode();
+
+         multiplyerMode();      //this is function is the reason that players can play Multiplayer mode
 }
 //End of the function "playerTwo"//
 
