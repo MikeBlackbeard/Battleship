@@ -11,38 +11,33 @@
 void starting();    //shows start menu
 void rulebook();    //shows the rules for the game
 void playerTwo();   //this function is being used to store the profile for player two
-void selectMode();  //this is where player can choose their desired playing mode "single or multi"
-void selectDiff();  //this function is being used to determine the level of difficulties in the game
+void selectMode();  //this is where player can choose their desired playing mode "single or multi", beside that "selectDiff" function has been called here aswell
+void selectDiff();  //this function is being used to determine the level of difficulties in the game and then used inside selectMode function
 //End of the first phase//
 
 
 
 //Beginning of the gameplay phase//
-void initalizeBoard(char board[12][12]);
-void printBoard(char board[12][12]);
+void initalizeBoard(char board[12][12]);    //this function is used to initialized the battleground aka board
+void printBoard(char board[12][12]);    //after initializing the battleground this function is used to show the Game board to the user
 void placeShipRand(char board[12][12], int shipsize);    // place ships randomly
 void playerPlaceShip(char board[12][12], int shipsize);    // place ships manually
-int checkGameOver(char p1[12][12]);
-int shootAIEasey(char attak[12][12], char rival[12][12], int turn);
-int shoot(char attak[12][12], char rival[12][12], int turn);
-void playerVsAIEasy(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12]);
-void playerVsPlayer(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12]);
-void multiplyerMode();
-void singlePlayerModeEasy();
+int checkGameOver(char p1[12][12]);     //inorder to be the game over,all the 10ships or 30 box has to be destroyed, thus 'checkGameOver function' is used to check if all the ships has been destroyed or not
+int shootAIEasey(char attak[12][12], char rival[12][12], int turn);     //in Single player mode,player has to choose the difficulty level either hard or easy, thus this function is used to give computer the ability to shoot randomly
+int shoot(char attak[12][12], char rival[12][12], int turn);    //this funtion is the based function for hitting the ships
+void playerVsAIEasy(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12]);  //to play single playermode easy
+void playerVsPlayer(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12]);  //To play the game with a friend(multiplayermode)
+void multiplyerMode();  //here all other functions has been used except "shootAIEasy,playerVsAIEasy&singlePlayerModeEasy" and then it was called in the main function to play multiplayermode.
+void singlePlayerModeEasy(); //just like the multiplayerMode, otherfunction has been called here to play multiplayermode
+//End of the gameplay Phase
 
-
-                     //Kinda like main function of 2nd phase,since it contains all the function of 2nd phase and being recall in the main function as "Preparation Phase"//
-//End of the gameplay Phase//
 
 int main()
 {
-  //Phase 1//
+  //First phase//
   starting();               //Shows the first interface or welcome screen//
+  //Final phase//
   selectMode();             //To select the playing mode either Single or Multi//
-
-  //phase 2//
-
-
   return 0;
 }
 
