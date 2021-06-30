@@ -353,7 +353,10 @@ selectDiff();
 
 
 
-//begining of the gameplay phase//
+                                                //begining of the gameplay phase//
+
+
+//creating a board for the game
 void initalizeBoard(char board[12][12])
 {
     for (int i = 0; i < 12; i++)
@@ -365,15 +368,17 @@ void initalizeBoard(char board[12][12])
     }
     for (int i = 1; i < 12; i++)
     {
-        board[0][i] = '0' + i - 1;
-        board[i][0] = 'A' + i - 1;
+        board[0][i] = '0' + i - 1;  // to set the area in numbers "0 to 9"
+        board[i][0] = 'A' + i - 1;  // to set the area in letters "A to J"
     }
 }
 
+
+//this function is used for printing the board which we initialized before
 void printBoard(char board[12][12])
 {
     printf("\n");
-    for (int i = 0; i < 11; i++)
+    for (int i = 0; i < 11; i++) // using for loop to print the box
     {
         for (int j = 0; j < 11; j++)
         {
@@ -387,12 +392,12 @@ void placeShipRand(char board[12][12], int shipsize)    // place ships randomly
 {
     int checked = 0;
     int x, y;
-    int direction;
-    int counter;
+    int direction;  //determine direction like horizontal or vertical
+    int counter;    //to count number of ships
     do
     {
-        x = (rand()%10) + 1;
-        y = (rand()%10) + 1;
+        x = (rand()%10) + 1; // x represent horizontal
+        y = (rand()%10) + 1;    // y represent vertical
 
         direction = rand()%2;
         counter = 0;
@@ -451,13 +456,15 @@ void playerPlaceShip(char board[12][12], int shipsize)    // place ships manuall
 {
     int checked = 0;
     int x, y;
-    int direction;
+    int direction; //variable to store userinput
     int counter;
     do
     {
         int correct = 0;
         int correctInput = 0;
         char userInput[20];
+
+        //using do while loop to select direction either vertical or horizontal
         do
         {
 
@@ -480,18 +487,18 @@ void playerPlaceShip(char board[12][12], int shipsize)    // place ships manuall
                 correct = 1;
         }while (correct == 0);
 
+        //another do while loop for taking the position for the ship with one letter and number example: a5
         do
         {
             int check = 0;
             char userInput[20];
-            //printf("Enter the ship position. ");
             puts("");
             printf("****************************************************************************\n");
             printf("*                                                                          *\n");
             printf("*                   ENTER SHIP POSITION(ex.'a0/A0')                        *\n");
             printf("*                                                                          *\n");
             printf("****************************************************************************\n");
-            scanf("%s", userInput);             // E 5
+            scanf("%s", userInput);             //taking input from user
             if(userInput[0] >= 'A' && userInput[0] <= 'J')
             {
                 y = userInput[0] - 'A' + 1 ;
@@ -513,6 +520,7 @@ void playerPlaceShip(char board[12][12], int shipsize)    // place ships manuall
         int check = 0;
 
         counter = 0;
+
         //from here check if not overlaping vertical
         if(direction == 1)
         {
@@ -564,21 +572,22 @@ void playerPlaceShip(char board[12][12], int shipsize)    // place ships manuall
     }
 }
 
+//to check if all the ships been hit and declare victory, or  whoever destroy all the ships first
 int checkGameOver(char p1[12][12])
 {
-    int nur = 0;
+    int counter = 0;
     for(int i = 0; i < 12; i++){
         for(int j = 0; j < 12; j++){
             if(p1[i][j] == 'X')
-                nur++;
+                counter++;
         }
     }
-    if(nur == 30)
+    if(counter == 30)
         return 1;   // when you hit 30 places is game over
     return 0;   // otherwise you keep playing
 }
 
-
+// with the help of this function computer can shoot randomly while in easy mode
 int shootAIEasey(char attak[12][12], char rival[12][12], int turn)
 {
             puts("");
@@ -593,13 +602,14 @@ int shootAIEasey(char attak[12][12], char rival[12][12], int turn)
             printf("***************                                              ***************\n");
             printf("****************************************************************************\n");
     printf("press 'enter' to continue");
-    getchar();
+    getchar(); //getting enter as an input
     int shotx, shoty;
     int correctRand = 0;
     do
     {
+        //to make sure the random shot are genarated inside the board not on the boarder
         shotx = (rand() % 10) + 1;
-        shoty = (rand() % 10) + 1;
+        //conditions to check if the shot hit or missed
         if(attak[shoty][shotx] == ' ')
             correctRand = 1;
     } while (correctRand == 0);
@@ -642,6 +652,7 @@ int shootAIEasey(char attak[12][12], char rival[12][12], int turn)
 }
 
 
+//base code which will be used in single and multiplayer mode game
 int shoot(char attak[12][12], char rival[12][12], int turn)
 {
     char userInput[20];
@@ -677,15 +688,16 @@ int shoot(char attak[12][12], char rival[12][12], int turn)
             shoty = userInput[0] - 'a' + 1;
             check++;
         }
+        //using if else condition to mark if its hit (X) or not (~)
         if(attak[shoty][shotx] == 'X' || attak[shoty][shotx] == '~'){
-                puts(" ");
+       puts(" ");
        puts(" ");
        puts(" ");
        puts(" ");
        puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!                                            !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!                                            !!!!!!!!!!!!!!!!!");
-       puts("!!!!!!!!!!!!!!!   Dum ass, you already hit that position   !!!!!!!!!!!!!!!!!");
+       puts("!!!!!!!!!!!!!!!  Dumb ass, you already hit that position   !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!                  Try again                 !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!                                            !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!                                            !!!!!!!!!!!!!!!!!");
@@ -730,11 +742,13 @@ int shoot(char attak[12][12], char rival[12][12], int turn)
     return turn;
 }
 
-
+//here using the previous function we can play against AI in easy Mode
 void playerVsAIEasy(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12])
 {
     int gameOver = 0;
     int turn = 1;
+
+    //using do while loop to continue the game untill it hits all the ships
     do{
         switch (turn)
         {
@@ -756,11 +770,13 @@ void playerVsAIEasy(char p1[12][12], char p2[12][12], char p1Attac[12][12], char
         printf("\nplayer 2 wins");
 }
 
-
+//combining with other functions creating multiplayer mode
 void playerVsPlayer(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12])
 {
     int gameOver = 0;
     int turn = 1;
+
+    //using do while loop to continue the turn if it hits and switching the turn if it misses
     do{
         switch (turn)
         {
@@ -781,16 +797,18 @@ void playerVsPlayer(char p1[12][12], char p2[12][12], char p1Attac[12][12], char
     else
         printf("\nplayer 2 wins");
 }
+
+//kinda like main function for multiplayermode since it combines other big functions here
 void multiplyerMode()
 {
     int userInput;
     srand(time(NULL));
     char boardP1[12][12], boardP2[12][12], boardP1Attac[12][12], boardP2Attac[12][12];
-    int shipsizes[10] = {5,4,4,3,3,3,2,2,2,2};
+    int shipsizes[10] = {5,4,4,3,3,3,2,2,2,2};      //the amount of ship can be printed
     initalizeBoard(boardP1);    //battle ground for player one//
-    initalizeBoard(boardP2);
-    initalizeBoard(boardP1Attac);
-    initalizeBoard(boardP2Attac);
+    initalizeBoard(boardP2);    // battle ground for player two
+    initalizeBoard(boardP1Attac);   // battleground for attacking opponent
+    initalizeBoard(boardP2Attac);   // same concept like previous
             puts(" ");
             puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             puts("!!!!!!!!!!!!!!!                                            !!!!!!!!!!!!!!!!!");
@@ -828,13 +846,13 @@ void multiplyerMode()
             puts("****************************************************************************");
 
 
-    scanf("%d",&userInput);
+    scanf("%d",&userInput);     //taking input from user to make decision
 
     if(userInput==2)
     {
     for(int i = 0; i< 10; i++)
     {
-        //puts("battleground for player 1");
+        //here player one will place his ship randomly
         puts(" ");
         printf("****************************************************************************\n");
         printf("**********          THIS IS YOUR BATTLEGROUND PLAYER 1         *************\n");
@@ -849,7 +867,7 @@ void multiplyerMode()
     puts("");
     for(int i = 0; i< 10; i++)
     {
-
+        //player 2 will place the ship randomly
         puts(" ");
         printf("****************************************************************************\n");
         printf("**********          THIS IS YOUR BATTLEGROUND PLAYER 2         *************\n");
@@ -882,6 +900,7 @@ void multiplyerMode()
        puts("");
 
         for(int i=0; i<10; i++)
+            //player 1 will place his/her ship manually
         {
         printBoard(boardP1);
         playerPlaceShip(boardP1, shipsizes[i]);
@@ -900,6 +919,7 @@ void multiplyerMode()
         printf("****************************************************************************\n");
         for(int i=0; i<10; i++)
         {
+            //here player 2 will place his ship manually
         playerPlaceShip(boardP2, shipsizes[i]);
         printBoard(boardP2);
         }
@@ -914,10 +934,10 @@ void multiplyerMode()
        puts("!!!!!!!!!!!!!!!      ! READY !    ! AIM !   ! FIRE !       !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!                                            !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    playerVsPlayer(boardP1,boardP2, boardP1Attac, boardP2Attac);
+    playerVsPlayer(boardP1,boardP2, boardP1Attac, boardP2Attac);  //recalling the playervsplayer function
 }
 
-//player vs AI easy
+//player vs AI easy mode
 void singlePlayerModeEasy()
 {
     int userInput;
@@ -1038,6 +1058,8 @@ void singlePlayerModeEasy()
        puts("!!!!!!!!!!!!!!!      ! READY !    ! AIM !   ! FIRE !       !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!                                            !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+       //from the beginning of the function until here is similar like multiplayermode function only difference is the function bellow
 
     playerVsAIEasy(boardP1,boardP2, boardP1Attac, boardP2Attac);    //player vs easy (if you don't win here you are a looser)
 
