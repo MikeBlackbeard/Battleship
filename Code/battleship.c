@@ -585,6 +585,18 @@ int checkGameOver(char p1[12][12])
 
 int shootAIEasey(char attak[12][12], char rival[12][12], int turn)
 {
+            puts("");
+            puts("");
+            puts("");
+            puts("");
+            puts("");
+            puts("");
+            printf("****************************************************************************\n");
+            printf("***************                                              ***************\n");
+            printf("***************           NOW ITS COMPUTERS TURN             ***************\n");
+            printf("***************                                              ***************\n");
+            printf("****************************************************************************\n");
+    printf("press 'enter' to continue");
     getchar();
     int shotx, shoty;
     int correctRand = 0;
@@ -608,6 +620,7 @@ int shootAIEasey(char attak[12][12], char rival[12][12], int turn)
        puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         attak[shoty][shotx] = 'X';
         printBoard(attak);
+        printf("press 'enter' to contine!");
         getchar();  // wait for user input before going to the next move
         return turn;
     }
@@ -627,6 +640,7 @@ int shootAIEasey(char attak[12][12], char rival[12][12], int turn)
         turn = (turn == 1 ? 2 : 1);
     }
     printBoard(attak);
+    printf("press 'enter' to contine!");
     getchar();  // wait for user input before going to the next move
     return turn;
 }
@@ -646,6 +660,7 @@ int shoot(char attak[12][12], char rival[12][12], int turn)
 
             puts("");
             printf("****************************************************************************\n");
+            printf("***************             NOW ITS YOUR TURN                ***************\n");
             printf("***************               ENTER POSITION                 ***************\n");
             printf("****************************************************************************\n");
         scanf("%s", userInput);     //without '&' since is an array
@@ -1023,7 +1038,7 @@ void singlePlayerModeEasy()
        puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!                                            !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!            SHIPS HAS BEEN PLACED           !!!!!!!!!!!!!!!!!");
-       puts("!!!!!!!!!!!!!!!                    NOW                    ! !!!!!!!!!!!!!!!!");
+       puts("!!!!!!!!!!!!!!!                    NOW                     !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!      ! READY !    ! AIM !   ! FIRE !       !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!                                            !!!!!!!!!!!!!!!!!");
        puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
