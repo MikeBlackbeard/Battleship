@@ -2,7 +2,8 @@
 #include <time.h>
 #include <stdlib.h>
 
-
+char playerOne[120];    // To store name of player one//
+char name2 [100];
 
 //All the functions that are being used in the game//
 
@@ -29,6 +30,8 @@ void playerVsAIEasy(char p1[12][12], char p2[12][12], char p1Attac[12][12], char
 void playerVsPlayer(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12]);        //To play the game with a friend(multiplayermode)
 void multiplyerMode();                  //here all other functions has been used except "shootAIEasy,playerVsAIEasy&singlePlayerModeEasy" and then it was called in the main function to play multiplayermode.
 void singlePlayerModeEasy();            //just like the multiplayerMode, otherfunction has been called here to play multiplayermode
+void singlePlayerModeHard();
+int shootAIHard(char attak[12][12], char rival[12][12], int turn, char prob[12][12]);
 //End of the gameplay Phase
 
 
@@ -46,7 +49,6 @@ void starting()
 
 {
     int start_button;       //to choose weather to start the game or see rules//
-    char playerOne[120];    // To store name of player one//
 
 
                                     //WELCOME SCREEN//
@@ -144,7 +146,7 @@ void rulebook()     //shows the the rules and regulation for the game//
    puts("|           If the you choose to play as a single player, you will be playing against the computer itself                                                  |");
    puts("|           But if you choose to play as a multiple player, you will be playing against another player denoted as Player 2.                                |");
    puts("|        2. The battlefield is a 10x10 grid where you place your ships                                                                                     |");
-   puts("|           The horizontal boxes are identified with numbers 1-10 and the vertical boxes are marked with letters a – j.                                    |");
+   puts("|           The horizontal boxes are identified with numbers 1-10 and the vertical boxes are marked with letters a ï¿½ j.                                    |");
    puts("|        3. You will be prompted to select the formation and position of your ships as you desired.                                                        |");
    puts("|        4. You can place your ships by entering its orientation, which are either horizontal or vertical                                                  |");
    puts("|           For horizontal orientation, type 'h' in the orientation option and type 'v' for vertical.                                                      |");
@@ -241,7 +243,6 @@ void selectMode()
 //Beginning of the function "PlayerTwo"//
 void playerTwo()    //This function is used to store 2nd player name in multiplayerMode//
 {
-    char name2 [100];
     puts(" ");
        puts(" ");
        printf("****************************************************************************\n");
@@ -325,6 +326,7 @@ case 2:                     //output of choosing option "2"//
    puts("*                                                                             *");
    puts("*                                                                             *");
    puts("*******************************************************************************");
+   singlePlayerModeHard();
 
 break;
 
@@ -516,6 +518,11 @@ void playerPlaceShip(char board[12][12], int shipsize)    // place ships manuall
             }
             if (check == 2)
                 correctInput = 1;
+            else
+            {
+                printf("LOSSER XDXDXD");
+                //code her to say that the posiotion is incorrect
+            }
         } while (correctInput == 0);
         int check = 0;
 
@@ -524,7 +531,7 @@ void playerPlaceShip(char board[12][12], int shipsize)    // place ships manuall
         //from here check if not overlaping vertical
         if(direction == 1)
         {
-            if((11 - y) > shipsize)
+            if((11 - y) >= shipsize)
             {
                 for(int i = 0; i < shipsize; i++)
                 {
@@ -554,6 +561,11 @@ void playerPlaceShip(char board[12][12], int shipsize)    // place ships manuall
             if (counter == shipsize)
                 checked = 1;
             }
+        }
+        if(checked == 0)
+        {
+            printf("LOSSER XDXDXD");
+            //AND ALSO HERE!!!
         }
     } while (checked == 0);
     if(direction == 2)
@@ -609,6 +621,7 @@ int shootAIEasey(char attak[12][12], char rival[12][12], int turn)
     {
         //to make sure the random shot are genarated inside the board not on the boarder
         shotx = (rand() % 10) + 1;
+        shoty = (rand() % 10) + 1;
         //conditions to check if the shot hit or missed
         if(attak[shoty][shotx] == ' ')
             correctRand = 1;
@@ -648,6 +661,111 @@ int shootAIEasey(char attak[12][12], char rival[12][12], int turn)
     printBoard(attak);
     printf("press 'enter' to contine!");
     getchar();  // wait for user input before going to the next move
+    return turn;
+}
+
+
+int shootAIHard(char attak[12][12], char rival[12][12], int turn, char prob[12][12])
+{
+    printBoard(prob);
+            puts("");
+            puts("");
+            puts("");
+            puts("");
+            puts("");
+            puts("");
+            printf("****************************************************************************\n");
+            printf("***************                                              ***************\n");
+            printf("***************           NOW ITS COMPUTERS TURN             ***************\n");
+            printf("***************                                              ***************\n");
+            printf("****************************************************************************\n");
+    printf("press 'enter' to continue");
+    getchar(); //getting enter as an input
+    int shotx, shoty;
+    int correctRand = 0;        //boolean
+    int numberOfProb = 0;       //counter for the probabilities
+    for(int i = 1; i < 11; i++)
+        for(int j = 1; j < 11; j++)
+            if(prob[i][j] == '?')
+                numberOfProb++;
+    printf("number of prob %d\n", numberOfProb);
+    if(numberOfProb > 0)
+    {
+        printf("here 1");
+        int hitHere = 0;
+        int toHit = (rand() % numberOfProb) +1 ;
+        printf("to hit: %d\n", toHit);
+        for(int i = 1; i < 11; i++)
+            for(int j = 1; j < 11; j++)
+                if(prob[i][j] == '?')
+                {
+                    hitHere++;
+                    if(hitHere == toHit)
+                    {
+                        shotx = j;
+                        shoty = i;
+                        printf("ill hit: %d, %d", j, i);
+                    }
+                }      
+    }
+    else{
+        printf("I shouldn't be here FUUCK");
+        do
+        {
+            //to make sure the random shot are genarated inside the board not on the boarder
+            shotx = (rand() % 10) + 1;
+            shoty = (rand() % 10) + 1;
+            //conditions to check if the shot hit or missed
+            if(attak[shoty][shotx] == ' ')
+                correctRand = 1;
+        } while (correctRand == 0);
+    }
+        if(rival[shoty][shotx] == '*')
+        {
+
+            puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!            _____________________            !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!           |                     |           !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!           |   !!!BULLSEYE!!!    |           !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!           |  COMPUTER GOTCH YA  |           !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!           |_____________________|           !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!                                             !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            attak[shoty][shotx] = 'X';
+            if(attak[shoty - 1][shotx] == ' ')
+                prob[shoty - 1][shotx] = '?';
+            if(attak[shoty + 1][shotx] == ' ')
+                prob[shoty + 1][shotx] = '?';
+            if(attak[shoty][shotx - 1] == ' ')
+                prob[shoty][shotx - 1] = '?';
+            if(attak[shoty][shotx + 1] == ' ')
+                prob[shoty][shotx + 1] = '?';
+            if(numberOfProb > 0)
+                prob[shoty][shotx] = '%';
+            printBoard(attak);
+            printf("press 'enter' to contine!");
+            getchar();  // wait for user input before going to the next move
+            return turn;
+        }
+        else
+        {
+
+            puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!         ___________________________         !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!        |                           |        !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!        |        !!!!PHEW!!!!       |        !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!        | COMPUTER MISSED BY A INCH |        !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!        |___________________________|        !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!                                             !!!!!!!!!!!!!!!!!");
+           puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            attak[shoty][shotx] = '~';
+            if(numberOfProb > 0)
+                prob[shoty][shotx] = '%';
+            turn = (turn == 1 ? 2 : 1);
+        }
+        printBoard(attak);
+        printf("press 'enter' to contine!");
+        getchar();  // wait for user input before going to the next move
     return turn;
 }
 
@@ -758,6 +876,33 @@ void playerVsAIEasy(char p1[12][12], char p2[12][12], char p1Attac[12][12], char
             break;
         case 2:
         turn = shootAIEasey(p2Attac, p1, turn);
+        gameOver = checkGameOver(p2Attac);
+        default:
+            break;
+        }
+        gameOver = checkGameOver(p1Attac);
+    }while (gameOver == 0);
+    if(turn == 1)
+        printf("%s wins",playerOne);
+    else
+        printf("\nplayer 2 wins");
+}
+
+void playerVsAIHard(char p1[12][12], char p2[12][12], char p1Attac[12][12], char p2Attac[12][12], char prob[12][12])
+{
+    int gameOver = 0;
+    int turn = 1;
+
+    //using do while loop to continue the game untill it hits all the ships
+    do{
+        switch (turn)
+        {
+        case 1:
+        turn = shoot(p1Attac, p2, turn);
+        gameOver = checkGameOver(p1Attac);
+            break;
+        case 2:
+        turn = shootAIHard(p2Attac, p1, turn, prob);
         gameOver = checkGameOver(p2Attac);
         default:
             break;
@@ -1062,5 +1207,133 @@ void singlePlayerModeEasy()
        //from the beginning of the function until here is similar like multiplayermode function only difference is the function bellow
 
     playerVsAIEasy(boardP1,boardP2, boardP1Attac, boardP2Attac);    //player vs easy (if you don't win here you are a looser)
+
+}
+
+void singlePlayerModeHard()
+{
+    int userInput;
+    srand(time(NULL));
+    char boardP1[12][12], boardP2[12][12], boardP1Attac[12][12], boardP2Attac[12][12], boardProb[12][12];
+    int shipsizes[10] = {5,4,4,3,3,3,2,2,2,2};
+    initalizeBoard(boardP1);    //battle ground for player one//
+    initalizeBoard(boardP2);
+    initalizeBoard(boardP1Attac);
+    initalizeBoard(boardP2Attac);
+    initalizeBoard(boardProb);
+
+
+
+            puts("****************************************************************************");
+            puts("*                                                                          *");
+            puts("*                                                                          *");
+            puts("*                                                                          *");
+            puts("*            __________________________________________________            *");
+            puts("*           |                                                  |           *");
+            puts("*           |                                                  |           *");
+            puts("*           |                                                  |           *");
+            puts("*           |      SO, HOW DO YOU WANT TO PLACE YOUR SHIP?     |           *");
+            puts("*           |                                                  |           *");
+            puts("*           |                                                  |           *");
+            puts("*           |__________________________________________________|           *");
+            puts("*                                                                          *");
+            puts("*    ____________________________          ____________________________    *");
+            puts("*   |                            |        |                            |   *");
+            puts("*   |                            |        |                            |   *");
+            puts("*   |           MANUAL           |        |         AUTOMATIC          |   *");
+            puts("*   |                            |        |                            |   *");
+            puts("*   |____________________________|        |____________________________|   *");
+            puts("*   |                            |        |                            |   *");
+            puts("*   |         Press '1'          |        |         Press '2'          |   *");
+            puts("*   |____________________________|        |____________________________|   *");
+            puts("*                                                                          *");
+            puts("*                                                                          *");
+            puts("*                                                                          *");
+            puts("*                                                                          *");
+            puts("****************************************************************************");
+
+
+
+    scanf("%d",&userInput);
+
+    if(userInput==2)
+    {
+    for(int i = 0; i< 10; i++)
+    {
+        //puts("battleground for player 1");
+        puts(" ");
+        printf("****************************************************************************\n");
+        printf("**********          THIS IS YOUR BATTLEGROUND PLAYER 1         *************\n");
+        printf("****************************************************************************\n");
+        placeShipRand(boardP1, shipsizes[i]);
+        printBoard(boardP1);
+        puts("");
+    }
+
+    puts("");
+    puts("");
+    puts("");
+    for(int i = 0; i< 10; i++)
+    {
+        //puts("battle ground for player 2");
+        puts(" ");
+        printf("****************************************************************************\n");
+        printf("**********          THIS IS YOUR BATTLEGROUND PLAYER 2         *************\n");
+        printf("****************************************************************************\n");
+        placeShipRand(boardP2, shipsizes[i]);
+        printBoard(boardP2);
+    }
+    }
+    else
+    {
+       puts("");
+       puts("");
+       printf("****************************************************************************\n");
+       printf("*                            SHIP PLACEMENT                                *\n");
+       printf("*__________________________________________________________________________*\n");
+       printf("*                                                                          *\n");
+       printf("*                                                                          *\n");
+       printf("*       PLEASE REMEMBER TO FOLLOW THE ORDER DURING PLACING THE SHIP        *\n");
+       printf("*                                                                          *\n");
+       printf("*                --------------------------------------                    *\n");
+       printf("*               |  >   1st: 1 SHIP  OVER 5 BOXES    <  |                   *\n");
+       printf("*               |  > 2nd: ONLY 4 SHIPS OVER 2 BOXES <  |                   *\n");
+       printf("*               |  > 3rd: ONLY 3 SHIPS OVER 3 BOXES <  |                   *\n");
+       printf("*               |  > 4th: ONLY 2 SHIPS OVER 4 BOXES <  |                   *\n");
+       printf("*               |  > 5th: ONLY 1 SHIP  OVER 5 BOXES <  |                   *\n");
+       printf("*                --------------------------------------                    *\n");
+       printf("*                                                                          *\n");
+       printf("****************************************************************************\n");
+       puts("");
+       puts("");
+        for(int i=0; i<10; i++)
+        {
+        printBoard(boardP1);
+        playerPlaceShip(boardP1, shipsizes[i]);
+        printBoard(boardP1);
+        }
+
+        for(int i=0; i<10; i++)
+        {
+        placeShipRand(boardP2, shipsizes[i]);
+        printBoard(boardP2);
+        }
+    }
+
+       puts(" ");
+       puts(" ");
+       puts(" ");
+       puts(" ");
+       puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+       puts("!!!!!!!!!!!!!!!                                            !!!!!!!!!!!!!!!!!");
+       puts("!!!!!!!!!!!!!!!            SHIPS HAS BEEN PLACED           !!!!!!!!!!!!!!!!!");
+       puts("!!!!!!!!!!!!!!!                    NOW                     !!!!!!!!!!!!!!!!!");
+       puts("!!!!!!!!!!!!!!!      ! READY !    ! AIM !   ! FIRE !       !!!!!!!!!!!!!!!!!");
+       puts("!!!!!!!!!!!!!!!                                            !!!!!!!!!!!!!!!!!");
+       puts("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+       //from the beginning of the function until here is similar like multiplayermode function only difference is the function bellow
+
+    playerVsAIHard(boardP1,boardP2, boardP1Attac, boardP2Attac, boardProb);    //player vs easy (if you don't win here you are a looser)
 
 }
